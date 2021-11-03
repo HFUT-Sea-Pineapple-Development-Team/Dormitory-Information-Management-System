@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS `dormbuild`;
 CREATE TABLE `dormbuild` (
   `id` int NOT NULL AUTO_INCREMENT,
   `dormBuildName` int NOT NULL DEFAULT '0' COMMENT '宿舍楼号',
-  `detail` varchar(100) DEFAULT NULL COMMENT '宿舍楼简介',
+  `detail` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '宿舍楼简介',
   `sex` int NOT NULL DEFAULT '0' COMMENT '宿舍性别类型(0女 1男)',
   PRIMARY KEY (`id`),
   UNIQUE KEY `dormBuildName` (`dormBuildName`)
@@ -104,7 +104,7 @@ DROP TABLE IF EXISTS `notice`;
 CREATE TABLE `notice` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '通知公告主键',
   `time` datetime NOT NULL COMMENT '公告发布时间',
-  `detail` varchar(1000) NOT NULL DEFAULT '' COMMENT '公告内容',
+  `detail` varchar(1000) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '公告内容',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='通知公告';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -183,15 +183,15 @@ DROP TABLE IF EXISTS `user`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '用户主键',
-  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户名',
-  `password` varchar(20) NOT NULL COMMENT '用户密码',
+  `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户名',
+  `password` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户密码',
   `roleId` int NOT NULL DEFAULT '2' COMMENT '用户角色(0超级管理员 1宿舍管理员 2学生)',
-  `stu_code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '学号',
+  `stu_code` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '学号',
   `sex` int NOT NULL COMMENT '性别(0代表女 1代表男)',
-  `major` varchar(20) DEFAULT NULL COMMENT '专业',
+  `major` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '专业',
   `dormBuildName` int DEFAULT NULL COMMENT '宿舍楼号',
   `roomId` int DEFAULT NULL COMMENT '寝室号',
-  `tel` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '手机号',
+  `tel` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '手机号',
   `class` int DEFAULT NULL COMMENT '班级号',
   `leave` int NOT NULL DEFAULT '0' COMMENT '是否离校(0在校 1离校)',
   PRIMARY KEY (`id`),
@@ -243,4 +243,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-02 23:05:49
+-- Dump completed on 2021-11-03 10:18:13
