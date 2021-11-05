@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `dormbuild`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `dormbuild` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `dormBuildName` int NOT NULL DEFAULT '0' COMMENT '宿舍楼号',
+  `dormBuildName` int NOT NULL DEFAULT '0' COMMENT '宿舍楼名称',
   `detail` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '宿舍楼简介',
   `sex` int NOT NULL DEFAULT '0' COMMENT '宿舍性别类型(0女 1男)',
   PRIMARY KEY (`id`),
@@ -156,13 +156,14 @@ DROP TABLE IF EXISTS `room_info`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `room_info` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `room_id` int DEFAULT NULL COMMENT '寝室房间号',
+  `room_id` int NOT NULL COMMENT '寝室房间号',
+  `build_num` int NOT NULL COMMENT '楼号',
   `person_num` int DEFAULT NULL COMMENT '寝室人数',
   `remain_water_charge` float DEFAULT NULL COMMENT '剩余水费',
   `remain_elec_charge` float DEFAULT NULL COMMENT '剩余电费',
   `is_good` tinyint(1) NOT NULL COMMENT '是否优秀寝室 0:是,1:否',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -171,6 +172,7 @@ CREATE TABLE `room_info` (
 
 LOCK TABLES `room_info` WRITE;
 /*!40000 ALTER TABLE `room_info` DISABLE KEYS */;
+INSERT INTO `room_info` VALUES (1,101,1,2,30,50,0);
 /*!40000 ALTER TABLE `room_info` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -189,14 +191,16 @@ CREATE TABLE `user` (
   `stu_code` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '学号',
   `sex` int NOT NULL COMMENT '性别(0代表女 1代表男)',
   `major` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '专业',
-  `dormBuildName` int DEFAULT NULL COMMENT '宿舍楼号',
+  `dormBuildId` int DEFAULT NULL COMMENT '宿舍楼id',
   `roomId` int DEFAULT NULL COMMENT '寝室号',
   `tel` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '手机号',
   `class` int DEFAULT NULL COMMENT '班级号',
-  `leave` int NOT NULL DEFAULT '0' COMMENT '是否离校(0在校 1离校)',
+  `leaveSchool` int NOT NULL DEFAULT '0' COMMENT '是否离校(0在校 1离校)',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `stu_code` (`stu_code`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='用户表';
+  UNIQUE KEY `stu_code` (`stu_code`),
+  KEY `FK_user_dormbuild` (`dormBuildId`),
+  CONSTRAINT `FK_user_dormbuild` FOREIGN KEY (`dormBuildId`) REFERENCES `dormbuild` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='用户表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -205,9 +209,24 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'admin','123',0,'110',0,NULL,NULL,NULL,'17777777777',NULL,0),(2,'keeper1','123',1,'10000',1,NULL,NULL,NULL,'17777777777',NULL,0),(3,'李白','123',2,'2018217666',1,NULL,NULL,NULL,'17777777777',NULL,0);
+INSERT INTO `user` VALUES (1,'admin','123',0,'110',0,NULL,NULL,NULL,'17777777777',NULL,0),(2,'keeper1','123',1,'10000',1,NULL,5,NULL,'17777777777',NULL,0),(3,'李白','123',2,'2018217666',1,NULL,1,101,'17777777777',NULL,0),(4,'诸葛亮','123',2,'2018217667',1,NULL,5,NULL,'17777777777',NULL,0),(5,'孙悟空','123',2,'2018217668',1,'计算机',1,101,'1777777777',1,0),(7,'孙膑','123',2,'2018217669',1,'计算机',4,101,'17777777777',1,0),(8,'刘备','123',2,'2018217670',1,'计算机',5,101,'17777777777',1,0),(9,'1','123',2,'2018217631',1,'计算机',1,123,'123',1,0),(10,'蔡哲锐','1',2,'2018217632',1,'计算机',4,123,'17756921990',2,1),(12,'1','1',2,'2018217600',1,'计算机',1,123,'132',1,0),(16,'嬴政','123',2,'2018216190',1,'数学',6,301,'13888888888',5,0),(17,'朱熹','123',2,'2018217680',1,'语文',5,201,'13333333333',2,0);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Temporary view structure for view `userandroom`
+--
+
+DROP TABLE IF EXISTS `userandroom`;
+/*!50001 DROP VIEW IF EXISTS `userandroom`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `userandroom` AS SELECT 
+ 1 AS `id`,
+ 1 AS `is_good`,
+ 1 AS `remain_water_charge`,
+ 1 AS `remain_elec_charge`*/;
+SET character_set_client = @saved_cs_client;
 
 --
 -- Table structure for table `visit_info`
@@ -233,6 +252,24 @@ LOCK TABLES `visit_info` WRITE;
 /*!40000 ALTER TABLE `visit_info` DISABLE KEYS */;
 /*!40000 ALTER TABLE `visit_info` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Final view structure for view `userandroom`
+--
+
+/*!50001 DROP VIEW IF EXISTS `userandroom`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `userandroom` AS select `user`.`id` AS `id`,`room_info`.`is_good` AS `is_good`,`room_info`.`remain_water_charge` AS `remain_water_charge`,`room_info`.`remain_elec_charge` AS `remain_elec_charge` from (`user` join `room_info`) where ((`user`.`dormBuildId` = `room_info`.`build_num`) and (`user`.`roomId` = `room_info`.`room_id`)) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -243,4 +280,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-03 10:25:38
+-- Dump completed on 2021-11-05 13:55:43
