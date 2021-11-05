@@ -237,7 +237,6 @@ public class UserDaoImpl implements UserDao {
 	 */
 	@Override
 	public void updateStudent(User studentUpdate) {
-		// TODO Auto-generated method stub
 		Connection connection = ConnectionFactory.getConnection();
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
