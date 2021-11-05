@@ -21,10 +21,10 @@
 				<select id="id" name="id" style="width:120px ;">
 					<c:forEach items="${buildSelects}" var="build" varStatus="stat" >
 							<option value="${build.id }" ${id eq build.id ? 'selected' : "" }>${build.dormBuildName}</option>
-						</c:forEach>
+					</c:forEach>
 	
-					</select>
-					&nbsp;<button type="submit" class="btn btn-info" onkeydown="if(event.keyCode==13) myForm.submit()">搜索</button>
+				</select>
+					<button type="submit" class="btn btn-info" onkeydown="if(event.keyCode==13) myForm.submit()">搜索</button>
 				</span>
 		</form>
 		<div>
@@ -52,10 +52,12 @@
 				</tbody>
 			</table>
 		</div>
+
 		<div align="center"><font color="red">${error }</font></div>
 		<div class="pagination pagination-centered">
 			<ul>
 				${pageCode }
 			</ul>
 		</div>
+
 </div>

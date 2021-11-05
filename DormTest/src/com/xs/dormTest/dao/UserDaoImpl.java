@@ -42,6 +42,7 @@ public class UserDaoImpl implements UserDao {
 				user.setSex(rs.getInt("sex"));
 				user.setStu_code(rs.getString("stu_code"));
 				user.setDormBuildId(rs.getInt("dormBuildId"));
+				user.setDormBuildId(rs.getInt("dormBuildId"));
 				user.setRoomId(rs.getInt("roomId"));
 				
 				return user;

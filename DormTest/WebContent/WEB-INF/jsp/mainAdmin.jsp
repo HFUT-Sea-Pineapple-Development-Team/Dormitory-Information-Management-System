@@ -99,6 +99,9 @@
 						<li><a href="student.action?action=list"><i class="icon-chevron-right"></i>学生管理</a></li>
 						<li><a href="record.action?action=list"><i class="icon-chevron-right"></i>缺勤记录</a></li>
 						<li><a href="password.action?action=preChange"><i class="icon-chevron-right"></i>修改密码</a></li>
+						<li><a href="student?action=list"><i class="icon-chevron-right"></i>学生管理</a></li>
+						<li><a href="keeperRepair.action?action=list"><i class="icon-chevron-right"></i>学生报修维修</a></li>
+						<li><a href="password?action=preChange"><i class="icon-chevron-right"></i>修改密码</a></li>
 						<li><a href="index.jsp"><i class="icon-chevron-right"></i>退出系统</a></li>
 					</c:if>
 					
@@ -106,13 +109,15 @@
 						<li><a href="blank"><i class="icon-chevron-right"></i>首页</a></li>
 						<li><a href="student.action?action=list"><i class="icon-chevron-right"></i>寝室情况</a></li>
 						<li><a href="record?action=list"><i class="icon-chevron-right"></i>缺勤记录</a></li>
+						<li><a href="record?action=list"><i class="icon-chevron-right"></i>寝室信息</a></li>
+						<li><a href="repair.action?action=list"><i class="icon-chevron-right"></i>报修维修</a></li>
+						<li><a href="check.action?action=list"><i class="icon-chevron-right"></i>通知公告</a></li>
 						<li><a href="password?action=preChange"><i class="icon-chevron-right"></i>修改密码</a></li>
 						<li><a href="index.jsp"><i class="icon-chevron-right"></i>退出系统</a></li>
 					</c:if>
 				</ul>
 			</div>
 					<div class="span10">
-					
 						<jsp:include page="${mainRight==null?'blank.jsp':mainRight}"></jsp:include>
 					</div>
 			</div>

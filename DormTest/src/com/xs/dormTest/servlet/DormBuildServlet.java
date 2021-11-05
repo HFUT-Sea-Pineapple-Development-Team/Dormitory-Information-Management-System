@@ -59,7 +59,6 @@ public class DormBuildServlet extends HttpServlet {
 			request.setAttribute("buildSelects", buildSelects);
 			request.setAttribute("id", id);
 			
-			
 			request.setAttribute("builds", builds);
 			request.setAttribute("mainRight", "/WEB-INF/jsp/dormBuildList.jsp");
 			request.getRequestDispatcher("/WEB-INF/jsp/mainAdmin.jsp").forward(request, response); 
@@ -126,7 +125,7 @@ public class DormBuildServlet extends HttpServlet {
 		}else if (action != null && action.equals("preUpdate")) {
 			
 			//根据宿舍楼id，查询宿舍楼
-			DormBuild build = dormBuildService.findById(Integer.parseInt(id) ) ;
+			DormBuild build = dormBuildService.findById(Integer.parseInt(id)) ;
 			//保存宿舍楼信息到前端页面
 			request.setAttribute("build", build);
 			//跳转到宿舍楼的修改页面 

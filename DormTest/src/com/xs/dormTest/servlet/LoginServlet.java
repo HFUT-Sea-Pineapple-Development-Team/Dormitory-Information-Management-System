@@ -33,7 +33,7 @@ public class LoginServlet extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("=登录=");
 		
-		//get用户名和密码
+		//get用户名和密码以及用户类型
 		String stu_code = request.getParameter("stu_code");
 		String password = request.getParameter("password");
 		String remember = request.getParameter("remember");
@@ -42,7 +42,7 @@ public class LoginServlet extends HttpServlet {
 		UserService userService = new UserServiceImpl();
 		//去查询用户输入的登录名和密码是否正确
 		User user = userService.findByNameAndPass(stu_code,password);
-		System.out.println(user);
+//		System.out.println(user);
 		
 		if (user == null) {
 			//输入的学号或密码错误
@@ -57,8 +57,7 @@ public class LoginServlet extends HttpServlet {
 				//记住密码一周
 				CookieUtil.addCookie("cookie_name_pass",7*24*60*60,request,response, stu_code, password);
 			}
-			
-			System.out.println("");
+
 			request.getRequestDispatcher("/WEB-INF/jsp/mainAdmin.jsp").forward(request,response);
 		}
 	}
