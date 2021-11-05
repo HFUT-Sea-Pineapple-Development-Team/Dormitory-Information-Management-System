@@ -7,10 +7,18 @@ public class User {
 	private Integer roleId;
 	private String stu_code;
 	private Integer sex;
+	private String major;
+	private Integer dormBuildId;
+	private Integer roomId;
+	private String tel;
+	private Integer className;
+	private Integer leaveSchool;
+	private DormBuild build;
 	public User() {
 		super();
 	}
-	public User(Integer id, String name, String password, Integer roleId, String stu_code, Integer sex) {
+	public User(Integer id, String name, String password, Integer roleId, String stu_code, Integer sex, String major,
+			Integer dormBuildId, Integer roomId, String tel, Integer className, Integer leaveSchool, DormBuild build) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -18,6 +26,13 @@ public class User {
 		this.roleId = roleId;
 		this.stu_code = stu_code;
 		this.sex = sex;
+		this.major = major;
+		this.dormBuildId = dormBuildId;
+		this.roomId = roomId;
+		this.tel = tel;
+		this.className = className;
+		this.leaveSchool = leaveSchool;
+		this.build = build;
 	}
 	public Integer getId() {
 		return id;
@@ -55,11 +70,60 @@ public class User {
 	public void setSex(Integer sex) {
 		this.sex = sex;
 	}
+	public String getMajor() {
+		return major;
+	}
+	public void setMajor(String major) {
+		this.major = major;
+	}
+	public Integer getDormBuildId() {
+		return dormBuildId;
+	}
+	public void setDormBuildId(Integer dormBuildId) {
+		this.dormBuildId = dormBuildId;
+	}
+	public Integer getRoomId() {
+		return roomId;
+	}
+	public void setRoomId(Integer roomId) {
+		this.roomId = roomId;
+	}
+	public String getTel() {
+		return tel;
+	}
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
+	public Integer getClassName() {
+		return className;
+	}
+	public void setClassName(Integer className) {
+		this.className = className;
+	}
+	public Integer getLeaveSchool() {
+		return leaveSchool;
+	}
+	public void setLeaveSchool(Integer leaveSchool) {
+		this.leaveSchool = leaveSchool;
+	}
+	public DormBuild getBuild() {
+		return build;
+	}
+	public void setBuild(DormBuild build) {
+		this.build = build;
+	}
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", password=" + password + ", roleId=" + roleId + ", stu_code="
-				+ stu_code + ", sex=" + sex + "]";
+				+ stu_code + ", sex=" + sex + ", major=" + major + ", dormBuildId=" + dormBuildId + ", roomId=" + roomId
+				+ ", tel=" + tel + ", className=" + className + ", leaveSchool=" + leaveSchool + ", build=" + build
+				+ "]";
 	}
+	
+	
+	
+	
+	
 	
 	
 	

@@ -6,7 +6,7 @@ import com.xs.dormTest.bean.DormBuild;
 
 public interface DormBuildService {
 
-	DormBuild findByName(String name);
+	DormBuild findByName(Integer name);
 
 	void save(DormBuild build);
 
@@ -15,6 +15,12 @@ public interface DormBuildService {
 	DormBuild findById(Integer id);
 
 	void update(DormBuild dormBuild);
+
+	List<DormBuild> findAll();
+
+	List<DormBuild> findByManager(Integer dormBuildId);
+
+
 
 
 }

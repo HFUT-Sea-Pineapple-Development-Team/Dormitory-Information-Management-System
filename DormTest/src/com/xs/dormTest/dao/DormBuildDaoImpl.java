@@ -16,7 +16,7 @@ public class DormBuildDaoImpl implements DormBuildDao {
 	 * 查询是否已存在该名称的宿舍楼
 	 */
 	@Override
-	public DormBuild findByName(String name) {
+	public DormBuild findByName(Integer name) {
 		// TODO Auto-generated method stub
 		Connection connection = ConnectionFactory.getConnection();
 		try {
@@ -24,7 +24,7 @@ public class DormBuildDaoImpl implements DormBuildDao {
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			
 			//索引从1开始
-			preparedStatement.setString(1, name);
+			preparedStatement.setInt(1, name);
 			
 			ResultSet rs = preparedStatement.executeQuery();
 			
@@ -34,7 +34,7 @@ public class DormBuildDaoImpl implements DormBuildDao {
 				//每一行的数据封装在一个实体Bean中，根据字段名获取字段值，注意该字段是什么类型
 				//就get什么类型
 				build.setId(rs.getInt("id"));
-				build.setDormBuildName(rs.getString("dormBuildName")) ;
+				build.setDormBuildName(rs.getInt("dormBuildName")) ;
 				build.setDetail(rs.getString("detail"));
 				
 				return build;
@@ -58,7 +58,7 @@ public class DormBuildDaoImpl implements DormBuildDao {
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			
 			//索引从1开始
-			preparedStatement.setString(1, build.getDormBuildName());
+			preparedStatement.setInt(1, build.getDormBuildName());
 			preparedStatement.setString(2, build.getDetail());
 			
 			preparedStatement.executeUpdate();
@@ -89,7 +89,7 @@ public class DormBuildDaoImpl implements DormBuildDao {
 				//每一行的数据封装在一个实体Bean中，根据字段名获取字段值，注意该字段是什么类型
 				//就get什么类型
 				build.setId(rs.getInt("id"));
-				build.setDormBuildName(rs.getString("dormBuildName")) ;
+				build.setDormBuildName(rs.getInt("dormBuildName")) ;
 				build.setDetail(rs.getString("detail"));
 				
 				builds.add(build) ;
@@ -125,7 +125,7 @@ public class DormBuildDaoImpl implements DormBuildDao {
 				//每一行的数据封装在一个实体Bean中，根据字段名获取字段值，注意该字段是什么类型
 				//就get什么类型
 				build.setId(rs.getInt("id"));
-				build.setDormBuildName(rs.getString("dormBuildName")) ;
+				build.setDormBuildName(rs.getInt("dormBuildName")) ;
 				build.setDetail(rs.getString("detail"));
 				
 				return build ;
@@ -150,7 +150,7 @@ public class DormBuildDaoImpl implements DormBuildDao {
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			
 			//索引从1开始
-			preparedStatement.setString(1, build.getDormBuildName());
+			preparedStatement.setInt(1, build.getDormBuildName());
 			preparedStatement.setString(2, build.getDetail());
 			preparedStatement.setInt(3, build.getId());
 			
@@ -160,6 +160,72 @@ public class DormBuildDaoImpl implements DormBuildDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	/**
+	 * 查询宿舍楼信息
+	 */
+	@Override
+	public List<DormBuild> findAll() {
+		// TODO Auto-generated method stub
+		Connection connection = ConnectionFactory.getConnection();
+		try {
+			String sql = "select * from dormbuild ";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			//因为查询出来的结果包括表头信息，所以要指针下移一行，看是否有查询出来的数据
+			List<DormBuild> builds = new ArrayList<DormBuild>();
+			while (rs.next()) {
+				DormBuild build = new DormBuild() ;
+				//每一行的数据封装在一个实体Bean中，根据字段名获取字段值，注意该字段是什么类型
+				//就get什么类型
+				build.setId(rs.getInt("id"));
+				build.setDormBuildName(rs.getInt("dormBuildName")) ;
+				build.setDetail(rs.getString("detail"));
+				
+				builds.add(build) ;
+			}
+			return builds;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	/**
+	 * 查询指定宿舍楼
+	 */
+	@Override
+	public List<DormBuild> findByManager(Integer dormBuildId) {
+		Connection connection = ConnectionFactory.getConnection();
+		try {
+			String sql = "select dormbuild.* from dormbuild,user where dormbuild.id = ?";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, dormBuildId);
+			
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			//因为查询出来的结果包括表头信息，所以要指针下移一行，看是否有查询出来的数据
+			List<DormBuild> builds = new ArrayList<DormBuild>();
+			while (rs.next()) {
+				DormBuild build = new DormBuild() ;
+				//每一行的数据封装在一个实体Bean中，根据字段名获取字段值，注意该字段是什么类型
+				//就get什么类型
+				build.setId(rs.getInt("id"));
+				build.setDormBuildName(rs.getInt("dormBuildName")) ;
+				build.setDetail(rs.getString("detail"));
+				
+				builds.add(build) ;
+			}
+			return builds;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

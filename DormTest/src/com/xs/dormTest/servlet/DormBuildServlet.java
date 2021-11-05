@@ -75,7 +75,7 @@ public class DormBuildServlet extends HttpServlet {
 			String detail = request.getParameter("detail") ;
 			
 			//宿舍楼名称不能重复，查询输入的宿舍楼是否已经存在
-			DormBuild dormBuild = dormBuildService.findByName(name) ;
+			DormBuild dormBuild = dormBuildService.findByName(Integer.parseInt(name)) ;
 			if (id != null && !id.equals("")) {
 				//更新宿舍楼信息
 				if (dormBuild != null && dormBuild.getId()!=Integer.parseInt(id)) {
@@ -91,7 +91,7 @@ public class DormBuildServlet extends HttpServlet {
 				}else {
 					dormBuild = dormBuildService.findById(Integer.parseInt(id)) ;
 					
-					dormBuild.setDormBuildName(name);
+					dormBuild.setDormBuildName(Integer.parseInt(name));
 					dormBuild.setDetail(detail);
 					
 					dormBuildService.update(dormBuild) ;
@@ -115,7 +115,7 @@ public class DormBuildServlet extends HttpServlet {
 				else {
 					//不存在则保存用户输入的信息到数据库
 					DormBuild build = new DormBuild() ;
-					build.setDormBuildName(name);
+					build.setDormBuildName(Integer.parseInt(name));
 					build.setDetail(detail);
 					dormBuildService.save(build) ;
 					request.setAttribute("mainRight", "/WEB-INF/jsp/dormBuildList.jsp");

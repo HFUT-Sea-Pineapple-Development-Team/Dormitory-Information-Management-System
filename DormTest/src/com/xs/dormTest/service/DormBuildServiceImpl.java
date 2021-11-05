@@ -13,7 +13,7 @@ public class DormBuildServiceImpl implements DormBuildService {
 	 * 根据名字查询信息并返回
 	 */
 	@Override
-	public DormBuild findByName(String name) {
+	public DormBuild findByName(Integer name) {
 		// TODO Auto-generated method stub
 		return dormBuildDao.findByName(name);
 	}
@@ -49,6 +49,22 @@ public class DormBuildServiceImpl implements DormBuildService {
 	public void update(DormBuild dormBuild) {
 		// TODO Auto-generated method stub
 		dormBuildDao.update(dormBuild) ;
+	}
+	/**
+	 * 获取所有学生信息
+	 */
+	@Override
+	public List<DormBuild> findAll() {
+		// TODO Auto-generated method stub
+		return dormBuildDao.findAll();
+	}
+	/**
+	 * 获取指定宿舍楼的学生信息
+	 */
+	@Override
+	public List<DormBuild> findByManager(Integer dormBuildId) {
+		// TODO Auto-generated method stub
+		return dormBuildDao.findByManager(dormBuildId);
 	}
 
 }
