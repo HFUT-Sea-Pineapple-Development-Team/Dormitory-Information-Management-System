@@ -15,17 +15,13 @@ public class User {
 	private Integer className;
 	private Integer leaveSchool;
 	private DormBuild build;
-	private Room room;
 
 
 	public User() {
 		super();
 	}
-
-
 	public User(Integer id, String name, String password, Integer roleId, String stu_code, Integer sex, String major,
-			Integer dormBuildId, Integer roomId, String tel, Integer className, Integer leaveSchool, DormBuild build,
-			Room room) {
+			Integer dormBuildId, Integer roomId, String tel, Integer className, Integer leaveSchool, DormBuild build) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -40,157 +36,92 @@ public class User {
 		this.className = className;
 		this.leaveSchool = leaveSchool;
 		this.build = build;
-		this.room = room;
 	}
-
-
 	public Integer getId() {
 		return id;
 	}
-
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
-
 	public String getName() {
 		return name;
 	}
-
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
-
 	public String getPassword() {
 		return password;
 	}
-
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-
 	public Integer getRoleId() {
 		return roleId;
 	}
-
-
 	public void setRoleId(Integer roleId) {
 		this.roleId = roleId;
 	}
-
-
 	public String getStu_code() {
 		return stu_code;
 	}
-
-
 	public void setStu_code(String stu_code) {
 		this.stu_code = stu_code;
 	}
-
-
 	public Integer getSex() {
 		return sex;
 	}
-
-
 	public void setSex(Integer sex) {
 		this.sex = sex;
 	}
 
-
 	public String getMajor() {
 		return major;
 	}
-
-
 	public void setMajor(String major) {
 		this.major = major;
 	}
-
-
 	public Integer getDormBuildId() {
 		return dormBuildId;
 	}
-
-
 	public void setDormBuildId(Integer dormBuildId) {
 		this.dormBuildId = dormBuildId;
 	}
-
-
 	public Integer getRoomId() {
 		return roomId;
 	}
-
-
 	public void setRoomId(Integer roomId) {
 		this.roomId = roomId;
 	}
-
-
 	public String getTel() {
 		return tel;
 	}
-
-
 	public void setTel(String tel) {
 		this.tel = tel;
 	}
-
-
 	public Integer getClassName() {
 		return className;
 	}
-
-
 	public void setClassName(Integer className) {
 		this.className = className;
 	}
-
-
 	public Integer getLeaveSchool() {
 		return leaveSchool;
 	}
-
-
 	public void setLeaveSchool(Integer leaveSchool) {
 		this.leaveSchool = leaveSchool;
 	}
-
-
 	public DormBuild getBuild() {
 		return build;
 	}
-
-
 	public void setBuild(DormBuild build) {
 		this.build = build;
 	}
-
-
-	public Room getRoom() {
-		return room;
-	}
-
-
-	public void setRoom(Room room) {
-		this.room = room;
-	}
-
-
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", password=" + password + ", roleId=" + roleId + ", stu_code="
 				+ stu_code + ", sex=" + sex + ", major=" + major + ", dormBuildId=" + dormBuildId + ", roomId=" + roomId
 				+ ", tel=" + tel + ", className=" + className + ", leaveSchool=" + leaveSchool + ", build=" + build
-				+ ", room=" + room + "]";
+				+ "]";
 	}
-	
 	
 }

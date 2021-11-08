@@ -53,6 +53,7 @@ window.onload = function(){
 		</div>
 		<form name="myForm" class="form-search" method="post" action="student.action?action=list" style="padding-bottom: 0px">
 				<button class="btn btn-success" type="button" style="margin-right: 50px;" onclick="javascript:window.location='student.action?action=preAdd'">添加</button>
+			    <button class="btn btn-success" type="button" style="margin-right: 50px;" onclick="javascript:window.location='student.action?action=addList'">批量导入</button>
 				<span class="data_search">
 					<c:if test="${session_user.roleId == 0}">
 					<select id="buildToSelect" name="buildToSelect" style="width: 110px;">

@@ -1,18 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <script type="text/javascript">
 	function checkForm(){
 		//通过id获取输入框中用户输入的信息
-		var jobCode=document.getElementById("jobCode").value;
+		var userName=document.getElementById("userName").value;
 		var password=document.getElementById("password").value;
 		var rPassword=document.getElementById("rPassword").value;
 		var name=document.getElementById("name").value;
 		var sex=document.getElementById("sex").value;
 		var tel=document.getElementById("tel").value;
 		
-		var dormBuildId = document.getElementsByName("dormBuildId");
-		if(jobCode==""||password==""||rPassword==""||name==""||sex==""||tel==""||dormBuildId==""){
+		var dormBuildIdCheckBox = document.getElementsByName("dormBuildId");
+		var checkBoxValue = new Array();
+		for (var i = 0; i < dormBuildIdCheckBox.length;i++){
+			if (dormBuildIdCheckBox[i].checked){
+				//复选框被选中，返回值为true，将复选框中的值添加到数组中
+				checkBoxValue.push(dormBuildIdCheckBox[i].value);
+			}
+		}
+		if(userName==""||password==""||rPassword==""||name==""||sex==""||tel==""|| checkBoxValue.length < 1){
 			document.getElementById("error").innerHTML="信息填写不完整！";
 			return false;
 		} else if(password!=rPassword){
@@ -26,13 +31,13 @@
 	}
 	
 	$(document).ready(function(){
-		$("#dormManager").addClass("active");
+		$("ul li:eq(1)").addClass("active");
 	});
 </script>
 <div class="data_list">
 		<div class="data_list_title">
 		<c:choose>
-			<c:when test="${dormManager.dormBuildId!=null }">
+			<c:when test="${dormManager.dormManagerId!=null }">
 				修改管理员
 			</c:when>
 			<c:otherwise>
@@ -40,13 +45,13 @@
 			</c:otherwise>
 		</c:choose>
 		</div>
-		<form action="dormManager.action?action=save" method="post" onsubmit="return checkForm()">
+		<form action="dormManager?action=save" method="post" onsubmit="return checkForm()">
 			<div class="data_form" >
-				<input type="hidden" id="dormManagerId" name="dormManagerId" value="${dormManager.id }"/>
+				<input type="hidden" id="dormManagerId" name="dormManagerId" value="${dormManager.dormManagerId }"/>
 					<table align="center">
 						<tr>
-							<td><font color="red">*</font>工号：</td>
-							<td><input type="text" id="jobCode"  name="jobCode" value="${dormManager.stu_code }"  style="margin-top:5px;height:30px;" /></td>
+							<td><font color="red">*</font>用户名：</td>
+							<td><input type="text" id="userName"  name="userName" value="${dormManager.userName }"  style="margin-top:5px;height:30px;" /></td>
 						</tr>
 						<tr>
 							<td><font color="red">*</font>密码：</td>
@@ -65,8 +70,8 @@
 							<td>
 								<select id="sex" name="sex" style="width: 90px;">
 									<option value="">请选择...</option>
-									<option value="1" ${dormManager.sex eq "1"?'selected':'' }>男</option>
-									<option value="0" ${dormManager.sex eq "0"?'selected':'' }>女</option>
+									<option value="男" ${dormManager.sex eq "男"?'selected':'' }>男</option>
+									<option value="女" ${dormManager.sex eq "女"?'selected':'' }>女</option>
 								</select>
 							</td>
 						</tr>
@@ -77,11 +82,7 @@
 						<tr>
 							<td><font color="red">*</font>管理楼栋：</td>
 							<td>
-								<select id="dormBuildId" name="dormBuildId" style="width: 90px;">
-									<c:forEach var="build" items="${builds}">
-										<option value="${build.id }" ${dormBuildId eq build.id?'selected':'' }>${build.dormBuildName}号楼</option>
-									</c:forEach>
-								</select>
+								<input type="checkbox" name="dormBuildId" value="1"  style="vertical-align:top;height:14px" >1号宿舍楼 &nbsp;
 							</td>
 						</tr>
 					</table>

@@ -7,12 +7,10 @@ public class Hygiene {
 	private Float grade_19;
 	private Float grade_20;
 	private Float grade_21;
-	private Room room;
 	public Hygiene() {
 		super();
 	}
-	public Hygiene(Integer build_id, Integer room_id, Float grade_18, Float grade_19, Float grade_20, Float grade_21,
-			Room room) {
+	public Hygiene(Integer build_id, Integer room_id, Float grade_18, Float grade_19, Float grade_20, Float grade_21) {
 		super();
 		this.build_id = build_id;
 		this.room_id = room_id;
@@ -20,7 +18,6 @@ public class Hygiene {
 		this.grade_19 = grade_19;
 		this.grade_20 = grade_20;
 		this.grade_21 = grade_21;
-		this.room = room;
 	}
 	public Integer getBuild_id() {
 		return build_id;
@@ -58,18 +55,11 @@ public class Hygiene {
 	public void setGrade_21(Float grade_21) {
 		this.grade_21 = grade_21;
 	}
-	public Room getRoom() {
-		return room;
-	}
-	public void setRoom(Room room) {
-		this.room = room;
-	}
 	@Override
 	public String toString() {
 		return "Hygiene [build_id=" + build_id + ", room_id=" + room_id + ", grade_18=" + grade_18 + ", grade_19="
-				+ grade_19 + ", grade_20=" + grade_20 + ", grade_21=" + grade_21 + ", room=" + room + "]";
+				+ grade_19 + ", grade_20=" + grade_20 + ", grade_21=" + grade_21 + "]";
 	}
-	
 	
 	
 }

@@ -127,6 +127,10 @@ $(document).ready(function(){
 						</tr>
 						</c:if>
 						<tr>
+							<td><font color="red">*</font>寝室：</td>
+							<td><input type="text" id="dormName"  name="dormName" value="${userUpdate.roomId }"  style="margin-top:5px;height:30px;" /></td>
+						</tr>
+						<tr>
 							<td><font color="red">*</font>联系电话：</td>
 							<td><input type="text" id="tel"  name="tel" value="${userUpdate.tel }"  style="margin-top:5px;height:30px;" /></td>
 						</tr>

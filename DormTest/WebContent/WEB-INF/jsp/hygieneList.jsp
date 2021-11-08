@@ -83,7 +83,7 @@ window.onload = function(){
 					<c:forEach  varStatus="i" var="hygiene" items="${hygienes}">
 						<tr>
 							<%-- <td>${i.count+(page-1)*pageSize }</td> --%>
-							<td>${hygiene.room.room_id}</td>
+							<td>${hygiene.room_id}</td>
 							<td>${hygiene.grade_18}</td>
 							<td>${hygiene.grade_19}</td>
 							<td>${hygiene.grade_20}</td>

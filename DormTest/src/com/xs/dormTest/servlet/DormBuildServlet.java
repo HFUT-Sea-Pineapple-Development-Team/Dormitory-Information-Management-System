@@ -16,7 +16,7 @@ import com.xs.dormTest.service.DormBuildService;
 import com.xs.dormTest.service.DormBuildServiceImpl;
 
 /**
- * Servlet implementation class DormBuildServlet1
+ * Servlet implementation class DormBuildServlet
  */
 @WebServlet("/dormBuild.action")
 public class DormBuildServlet extends HttpServlet {

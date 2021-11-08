@@ -8,14 +8,7 @@ public interface RoomDao {
 
 	List<Room> findByAll();
 
-	List<Room> findByBuildId(String sql);
-
-	Room findByBuildAndRoom(Integer buildId, Integer roomId);
-
-	void saveRoom(Room roomsave);
-
-	void deleteRoom(Room roomExist);
+	List<Room> findByBuildId(Integer buildToSelect);
 
 
 }
-

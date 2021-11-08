@@ -74,5 +74,53 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/WebContent/WEB-INF/lib/commons-fileupload-1.4.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/WebContent/WEB-INF/lib/commons-io-2.11.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/WebContent/WEB-INF/lib/poi-5.1.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/WebContent/WEB-INF/lib/poi-examples-5.1.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/WebContent/WEB-INF/lib/poi-excelant-5.1.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/WebContent/WEB-INF/lib/poi-ooxml-5.1.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/WebContent/WEB-INF/lib/poi-ooxml-full-5.1.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/WebContent/WEB-INF/lib/poi-ooxml-lite-5.1.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/WebContent/WEB-INF/lib/poi-scratchpad-5.1.0.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$MODULE_DIR$/WebContent/WEB-INF/lib/poi-javadoc-5.1.0.jar!/" />
+        </JAVADOC>
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/WebContent/WEB-INF/lib" />
+          <root url="jar://$MODULE_DIR$/WebContent/WEB-INF/lib/commons-logging-1.2.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$MODULE_DIR$/WebContent/WEB-INF/lib/commons-logging-1.2-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/WebContent/WEB-INF/lib" recursive="false" />
+      </library>
+    </orderEntry>
   </component>
 </module>

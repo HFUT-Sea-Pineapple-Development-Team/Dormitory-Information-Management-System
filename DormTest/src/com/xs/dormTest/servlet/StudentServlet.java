@@ -20,6 +20,10 @@ import com.xs.dormTest.service.DormBuildServiceImpl;
 import com.xs.dormTest.service.UserService;
 import com.xs.dormTest.service.UserServiceImpl;
 import com.xs.dormTest.util.PageModel;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 /**
  * Servlet implementation class StudentServlet
@@ -99,7 +103,6 @@ public class StudentServlet extends HttpServlet {
 			Integer totalNum = userService.findTotalNum(buildToSelect,searchType,keyword,user);
 			
 			System.out.println(searchType);
-			System.out.println(students);
 			
 			System.out.println(buildToSelect);
 			request.setAttribute("totalNum", totalNum);
@@ -157,6 +160,7 @@ public class StudentServlet extends HttpServlet {
 					studentUpdate.setMajor(major);
 					studentUpdate.setClassName(Integer.parseInt(className));
 					studentUpdate.setDormBuildId(Integer.parseInt(dormBuildId));
+					studentUpdate.setRoomId(Integer.parseInt(dormName));
 					studentUpdate.setTel(tel);
 					studentUpdate.setLeaveSchool(Integer.parseInt(leaveSchool));
 					
@@ -178,6 +182,7 @@ public class StudentServlet extends HttpServlet {
 					user2.setMajor(major);
 					user2.setClassName(Integer.parseInt(className));
 					user2.setDormBuildId(Integer.parseInt(dormBuildId));
+					user2.setRoomId(Integer.parseInt(dormName));
 					user2.setTel(tel);
 					userService.saveStudent(user2);
 					response.sendRedirect(getServletContext().getContextPath()+"/student.action?action=list");

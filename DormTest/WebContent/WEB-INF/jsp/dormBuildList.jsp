@@ -8,7 +8,7 @@
 		}
 	}
 	$(document).ready(function(){
-		$("ul li:eq(4)").addClass("active");
+		$("ul li:eq(3)").addClass("active");
 	});
 </script>
 <div class="data_list">
@@ -46,6 +46,7 @@
 						<td>${build.detail==null||build.detail==""?"无":build.detail }</td>
 						<td><button class="btn btn-mini btn-info" type="button" onclick="javascript:window.location='dormBuild?action=manager&dormBuildId=${dormBuild.dormBuildId }'">管理员</button>&nbsp;
 							<button class="btn btn-mini btn-info" type="button" onclick="javascript:window.location='dormBuild.action?action=preUpdate&id=${build.id }'">修改</button>&nbsp;
+							<button class="btn btn-mini btn-danger" type="button" onclick="dormBuildDelete(${dormBuild.dormBuildId})">删除</button></td>
 					</tr>
 					</c:forEach>
 				</tbody>

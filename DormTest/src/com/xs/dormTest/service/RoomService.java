@@ -8,12 +8,6 @@ public interface RoomService {
 
 	List<Room> findByAll();
 
-	List<Room> findByBuildId(Integer buildToSelect, String keyword);
-
-	Room findByBuildAndRoom(Integer buildId, Integer roomId);
-
-	void saveRoom(Room roomsave);
-
-	void deleteRoom(Room roomExist);
+	List<Room> findByBuildId(Integer buildToSelect);
 
 }

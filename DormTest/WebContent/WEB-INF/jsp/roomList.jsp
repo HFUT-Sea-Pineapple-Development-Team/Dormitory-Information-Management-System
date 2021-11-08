@@ -5,7 +5,7 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
-	$("#room").addClass("active");
+	$("#hygiene").addClass("active");
 	$('.datatable').dataTable( {        				
 		 "oLanguage": {
 				"sUrl": "/DormManage/media/zh_CN.json"
@@ -26,7 +26,7 @@ $(document).ready(function(){
 
 //文档加载完成后
 window.onload = function(){ 
-	$("ul li:eq(3)").addClass("active");
+	$("#DataTables_Table_0_wrapper .row-fluid").remove();
 };
 	function studentDelete(studentId) {
 		if(confirm("您确定要删除这个学生吗？")) {
@@ -46,13 +46,11 @@ window.onload = function(){
 
 
 </style>
-<c:if test="${session_user.roleId == 0}">
 <div class="data_list">
 		<div class="data_list_title">
-			寝室管理
+			卫生统计
 		</div>
 		<form name="myForm" class="form-search" method="post" action="room.action?action=list" style="padding-bottom: 0px">
-				<button class="btn btn-success" type="button" style="margin-right: 50px;" onclick="javascript:window.location='room.action?action=preAdd&buildId=${buildToSelect}'">添加</button>
 				<span class="data_search">
 					<select id="buildToSelect" name="buildToSelect" style="width: 110px;">
 						<c:forEach var="build" items="${builds}">
@@ -71,7 +69,6 @@ window.onload = function(){
 					<th>寝室号</th>
 					<th>人数</th>
 					<th>是否满额</th>
-					<th>操作</th>
 				</tr>
 				</thead>
 				<tbody>
@@ -81,8 +78,7 @@ window.onload = function(){
 							<td>${room.room_id}</td>
 							<td>${room.person_num}</td>
 							<td>${room.person_num eq 4? "已满":"未满"}</td>
-							<td><button class="btn btn-mini btn-info" type="button" onclick="javascript:window.location='room.action?action=detail&buildId=${buildToSelect }&roomId=${room.id }'">查看详情</button>&nbsp;
-								<button class="btn btn-mini btn-danger" type="button" onclick="javascript:window.location='room.action?action=deleteRoom&buildId=${buildToSelect }&roomId=${room.id }'">删除</button></td>
+							<td><button class="btn btn-mini btn-info" type="button" onclick="javascript:window.location='room.action?action=preUpdate&roomId='">录入分数</button>&nbsp;
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -95,49 +91,3 @@ window.onload = function(){
 			</ul>
 		</div> --%>
 </div>
-</c:if>
-
-<c:if test="${session_user.roleId == 1}">
-<div class="data_list">
-		<div class="data_list_title">
-			寝室管理
-		</div>
-		<form name="myForm" class="form-search" method="post" action="room.action?action=list" style="padding-bottom: 0px">
-				寝室号
-				<span class="data_search">
-					&nbsp;<input id="keyword" name="keyword" type="text"  style="width:120px;height: 30px;" class="input-medium search-query" value="${keyword}">
-					&nbsp;<button type="submit" class="btn btn-info" onkeydown="if(event.keyCode==13) myForm.submit()">搜索</button>
-				</span>
-		</form>
-		<div>
-			<table class="table table-striped table-bordered table-hover datatable">
-				<thead>
-					<tr>
-					<!-- <th>编号</th> -->
-					<th>寝室号</th>
-					<th>人数</th>
-					<th>是否满额</th>
-					<th>操作</th>
-				</tr>
-				</thead>
-				<tbody>
-					<c:forEach  varStatus="i" var="room" items="${rooms }">
-						<tr>
-							<%-- <td>${i.count+(page-1)*pageSize }</td> --%>
-							<td>${room.room_id}</td>
-							<td>${room.person_num}</td>
-							<td>${room.person_num eq 4? "已满":"未满"}</td>
-							<td><button class="btn btn-mini btn-info" type="button" onclick="javascript:window.location='room.action?action=detail&buildId=${session_user.dormBuildId }&roomId=${room.id }'">查看详情</button>&nbsp;
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-		</div>
-		<div align="center"><font color="red">${error }</font></div>
-		<%-- <div class="pagination pagination-centered">
-			<ul>
-				${pageCode }
-			</ul>
-		</div> --%>
-</div>
-</c:if>
