@@ -1,2 +1,6 @@
 eclipse.preferences.version=1
 encoding//WebContent/WEB-INF/page-taglib.tld=UTF-8
+encoding//src/com/xs/dormTest/servlet/DormBuildServlet.java=UTF-8
+encoding//src/com/xs/dormTest/servlet/DormManagerServlet.java=UTF-8
+encoding//src/com/xs/dormTest/util/PageTag.java=UTF-8
+encoding/<project>=UTF-8

@@ -85,7 +85,7 @@
 			<div class="span2 bs-docs-sidebar" >
 				<ul class="nav nav-list bs-docs-sidenav">
 					<c:if test="${session_user.roleId == 0}">
-						<li><a href="blank.jsp"><i class="icon-chevron-right"></i>首页</a></li>
+						<li><a href="blank.action?action=list"><i class="icon-chevron-right"></i>首页</a></li>
 						<li><a href="dormManager.action?action=list"><i class="icon-chevron-right"></i>宿舍管理员管理</a></li>
 						<li><a href="student.action?action=list"><i class="icon-chevron-right"></i>学生管理</a></li>
 						<li><a href="room.action?action=list"><i class="icon-chevron-right"></i>寝室管理</a></li>

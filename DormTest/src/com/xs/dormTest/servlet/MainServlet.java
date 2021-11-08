@@ -1,23 +1,26 @@
 package com.xs.dormTest.servlet;
 
 import java.io.IOException;
+
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 /**
- * Servlet implementation class LoginOutServlet
+ * Servlet implementation class DormManagerServlet
  */
-@WebServlet("/LoginOut.action")
-public class LoginOutServlet extends HttpServlet {
+@WebServlet("/blank.action")
+public class MainServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginOutServlet() {
+    public MainServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,10 +29,19 @@ public class LoginOutServlet extends HttpServlet {
 	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 清除保存在session中的用户信息
-		request.getSession().removeAttribute("session_user");
+
+		request.setCharacterEncoding("utf-8");
+		String action = request.getParameter("action") ;
 		
-		response.sendRedirect("index.jsp");
+		if (action != null && action.equals("list")) {
+
+		request.setAttribute("mainRight", "/WEB-INF/jsp/blank.jsp");
+		request.getRequestDispatcher("/WEB-INF/jsp/mainAdmin.jsp").forward(request, response);
+			
+		}
+		
 	}
 
 }
+
+ 

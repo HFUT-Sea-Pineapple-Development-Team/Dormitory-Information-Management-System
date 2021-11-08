@@ -27,7 +27,7 @@ public class DormManagerServlet extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DormManagerServlet() {
+    public DormManagerServlet(){
         super();
         // TODO Auto-generated constructor stub
     }
