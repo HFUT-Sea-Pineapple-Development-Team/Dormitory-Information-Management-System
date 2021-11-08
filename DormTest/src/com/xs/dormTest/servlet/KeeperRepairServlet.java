@@ -36,6 +36,7 @@ public class KeeperRepairServlet extends HttpServlet {
         String action = request.getParameter("action") ;
         KeeperRepairService keeperRepairService = new KeeperRepairServiceImpl() ;
         User user = (User) request.getSession().getAttribute("session_user");
+        Integer build_id = user.getDormBuildId();
         if (action != null && action.equals("list")) {
             String room_id = request.getParameter("room_id") ;
             //System.out.println(room_id);

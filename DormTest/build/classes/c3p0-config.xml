@@ -1,9 +1,11 @@
 <c3p0-config>
   <default-config>
     <property name="driverClass">com.mysql.jdbc.Driver</property>
-    <property name="jdbcUrl">jdbc:mysql://localhost:3306/db_dorm?generateSimpleParameterMetadata=true</property>
+    <property name="jdbcUrl">jdbc:mysql://localhost:3306/dorm?generateSimpleParameterMetadata=true</property>
     <property name="user">root</property>
-    <property name="password">789456</property>
+    
+    <!-- <property name="password">2000416a</property> -->
+    <property name="password">2000416a</property>
     
     <property name="initialPoolSize">10</property>
     <property name="maxIdleTime">30</property>

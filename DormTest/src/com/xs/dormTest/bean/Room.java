@@ -1,17 +1,25 @@
 package com.xs.dormTest.bean;
 
 public class Room {
+	private Integer id;
 	private Integer room_id;
 	private Integer build_num;
 	private Integer person_num;
 	public Room() {
 		super();
 	}
-	public Room(Integer room_id, Integer build_num, Integer person_num) {
+	public Room(Integer id, Integer room_id, Integer build_num, Integer person_num) {
 		super();
+		this.id = id;
 		this.room_id = room_id;
 		this.build_num = build_num;
 		this.person_num = person_num;
+	}
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
 	}
 	public Integer getRoom_id() {
 		return room_id;
@@ -33,8 +41,10 @@ public class Room {
 	}
 	@Override
 	public String toString() {
-		return "Room [room_id=" + room_id + ", build_num=" + build_num + ", person_num=" + person_num + "]";
+		return "Room [id=" + id + ", room_id=" + room_id + ", build_num=" + build_num + ", person_num=" + person_num
+				+ "]";
 	}
+	
 	
 	
 }

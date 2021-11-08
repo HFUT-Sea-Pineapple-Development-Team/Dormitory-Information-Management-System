@@ -8,6 +8,7 @@ import com.mysql.cj.protocol.Resultset;
 import com.mysql.cj.xdevapi.PreparableStatement;
 import com.mysql.cj.xdevapi.Statement;
 import com.xs.dormTest.bean.DormBuild;
+import com.xs.dormTest.bean.Room;
 import com.xs.dormTest.bean.User;
 import com.xs.dormTest.bean.UserAndRoom;
 import com.xs.dormTest.util.ConnectionFactory;
@@ -38,7 +39,6 @@ public class UserDaoImpl implements UserDao {
 				user.setRoleId(rs.getInt("roleId"));
 				user.setSex(rs.getInt("sex"));
 				user.setStu_code(rs.getString("stu_code"));
-				user.setDormBuildId(rs.getInt("dormBuildId"));
 				user.setDormBuildId(rs.getInt("dormBuildId"));
 				user.setRoomId(rs.getInt("roomId"));
 				
@@ -102,7 +102,7 @@ public class UserDaoImpl implements UserDao {
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		try {
-			String sql = "insert into user(name,password,stu_code,sex,major,dormBuildId,roomId,tel,class) value(?,?,?,?,?,?,?,?,?)";
+			String sql = "insert into user(name,password,stu_code,sex,major,dormBuildId,tel,class) value(?,?,?,?,?,?,?,?)";
 			preparedStatement = connection.prepareStatement(sql); 
 			
 			preparedStatement.setString(1, user.getName());
@@ -111,9 +111,8 @@ public class UserDaoImpl implements UserDao {
 			preparedStatement.setInt(4, user.getSex());
 			preparedStatement.setString(5, user.getMajor());
 			preparedStatement.setInt(6, user.getDormBuildId());
-			preparedStatement.setInt(7, user.getRoomId());
-			preparedStatement.setString(8, user.getTel());
-			preparedStatement.setInt(9, user.getClassName());
+			preparedStatement.setString(7, user.getTel());
+			preparedStatement.setInt(8, user.getClassName());
 			
 			preparedStatement.executeUpdate();
 			
@@ -159,6 +158,10 @@ public class UserDaoImpl implements UserDao {
 				build.setDormBuildName(rs.getInt("buildName"));
 				user.setBuild(build);
 				
+				Room room = new Room();
+				room.setRoom_id(rs.getInt("roomName"));
+				user.setRoom(room);
+				
 				users.add(user) ;
 			}
 			return users;
@@ -194,7 +197,7 @@ public class UserDaoImpl implements UserDao {
 	public User findById(int id) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
-			String sql = "select * from user where id = ?";
+			String sql = "select user.*,room_info.room_id roomName from user left join room_info on room_info.id = user.roomId where user.id = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			
 			//索引从1开始
@@ -219,6 +222,10 @@ public class UserDaoImpl implements UserDao {
 				user.setTel(rs.getString("tel"));
 				user.setLeaveSchool(rs.getInt("leaveSchool"));
 				
+				Room room = new Room();
+				room.setRoom_id(rs.getInt("roomName"));
+				user.setRoom(room);
+				
 				return user;
 			}
 			
@@ -238,7 +245,7 @@ public class UserDaoImpl implements UserDao {
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		try {
-			String sql = "Update user set name = ?,password = ?,stu_code = ?,sex = ?,major = ?,dormBuildId = ?,roomId = ?,tel = ?,class = ?,leaveSchool = ? where id = ?";
+			String sql = "Update user set name = ?,password = ?,stu_code = ?,sex = ?,major = ?,dormBuildId = ?,tel = ?,class = ?,leaveSchool = ? where id = ?";
 			System.out.println(sql);
 			preparedStatement = connection.prepareStatement(sql); 
 			
@@ -248,11 +255,10 @@ public class UserDaoImpl implements UserDao {
 			preparedStatement.setInt(4, studentUpdate.getSex());
 			preparedStatement.setString(5, studentUpdate.getMajor());
 			preparedStatement.setInt(6, studentUpdate.getDormBuildId());
-			preparedStatement.setInt(7, studentUpdate.getRoomId());
-			preparedStatement.setString(8, studentUpdate.getTel());
-			preparedStatement.setInt(9, studentUpdate.getClassName());
-			preparedStatement.setInt(10, studentUpdate.getLeaveSchool());
-			preparedStatement.setInt(11, studentUpdate.getId());
+			preparedStatement.setString(7, studentUpdate.getTel());
+			preparedStatement.setInt(8, studentUpdate.getClassName());
+			preparedStatement.setInt(9, studentUpdate.getLeaveSchool());
+			preparedStatement.setInt(10, studentUpdate.getId());
 			
 			preparedStatement.executeUpdate();
 			
@@ -319,6 +325,250 @@ public class UserDaoImpl implements UserDao {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	/**
+	 * 当楼号和寝室号确定时，获取居住其中的学生
+	 */
+	@Override
+	public List<User> findByBuildAndRoom(Integer buildId, Integer roomId) {
+		Connection connection = ConnectionFactory.getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		try {
+			String sql = "select * from user where dormBuildId = ? and roomId = ?";
+			preparedStatement = connection.prepareStatement(sql);
+			
+			System.out.println(sql);
+			//索引从1开始
+			preparedStatement.setInt(1, buildId);
+			preparedStatement.setInt(2, roomId);
+			
+			rs = preparedStatement.executeQuery();
+			
+			List<User> users = new ArrayList<User>();
+			//因为查询出来的结果包括表头信息，所以要指针下移一行，看是否有查询出来的数据
+			while (rs.next()) {
+				User user = new User();
+				//每一行的数据封装在一个实体Bean中，根据字段名获取字段值，注意该字段是什么类型
+				//就get什么类型
+				user.setId(rs.getInt("id"));
+				user.setName(rs.getString("name"));
+				user.setSex(rs.getInt("sex"));
+				user.setStu_code(rs.getString("stu_code"));
+				user.setMajor(rs.getString("major"));
+				user.setDormBuildId(rs.getInt("dormBuildId"));
+				user.setRoomId(rs.getInt("roomId"));
+				user.setClassName(rs.getInt("class"));
+				user.setTel(rs.getString("tel"));
+				user.setLeaveSchool(rs.getInt("leaveSchool"));
+				
+				users.add(user) ;
+			}
+			return users;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/**
+	 * 已知寝室楼号，获取该寝室楼号中所有未分配寝室的学生
+	 */
+	@Override
+	public List<User> findNotRoom(Integer build_id) {
+		Connection connection = ConnectionFactory.getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		try {
+			String sql = "select * from user where dormBuildId = ? and roomId is null and roleId = 2";
+			preparedStatement = connection.prepareStatement(sql);
+			
+			//索引从1开始
+			preparedStatement.setInt(1, build_id);
+			
+			rs = preparedStatement.executeQuery();
+			
+			List<User> users = new ArrayList<User>();
+			//因为查询出来的结果包括表头信息，所以要指针下移一行，看是否有查询出来的数据
+			while (rs.next()) {
+				User user = new User();
+				//每一行的数据封装在一个实体Bean中，根据字段名获取字段值，注意该字段是什么类型
+				//就get什么类型
+				user.setId(rs.getInt("id"));
+				user.setName(rs.getString("name"));
+				user.setSex(rs.getInt("sex"));
+				user.setStu_code(rs.getString("stu_code"));
+				user.setMajor(rs.getString("major"));
+				user.setDormBuildId(rs.getInt("dormBuildId"));
+				user.setRoomId(rs.getInt("roomId"));
+				user.setClassName(rs.getInt("class"));
+				user.setTel(rs.getString("tel"));
+				user.setLeaveSchool(rs.getInt("leaveSchool"));
+				
+				users.add(user) ;
+			}
+			return users;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/**
+	 * 将学生加入对应寝室
+	 */
+	@Override
+	public void addUser(User userAdd) {
+		Connection connection = ConnectionFactory.getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		try {
+			String sql = "Update user set roomId = ? where id = ?";
+			System.out.println(sql);
+			preparedStatement = connection.prepareStatement(sql); 
+			
+			preparedStatement.setInt(1, userAdd.getRoomId());
+			preparedStatement.setInt(2, userAdd.getId());
+			
+			preparedStatement.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+	/**
+	 * 将学生的宿舍号置为空
+	 */
+	@Override
+	public void updateRoom(Integer id) {
+		Connection connection = ConnectionFactory.getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		try {
+			String sql = "Update user set roomId = null where id = ?";
+			System.out.println(sql);
+			preparedStatement = connection.prepareStatement(sql); 
+			
+			preparedStatement.setInt(1, id);
+			
+			preparedStatement.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+	/**
+	 * 找到所有的宿舍管理员
+	 */
+	@Override
+	public List<User> findManager() {
+		Connection connection = ConnectionFactory.getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		try {
+			String sql = "select user.*,dormbuild.dormBuildName buildName from user left join dormbuild on dormbuild.id = user.dormBuildId where roleId = 1";
+			preparedStatement = connection.prepareStatement(sql);
+			
+			rs = preparedStatement.executeQuery();
+			
+			List<User> users = new ArrayList<User>();
+			//因为查询出来的结果包括表头信息，所以要指针下移一行，看是否有查询出来的数据
+			while (rs.next()) {
+				User user = new User();
+				//每一行的数据封装在一个实体Bean中，根据字段名获取字段值，注意该字段是什么类型
+				//就get什么类型
+				user.setId(rs.getInt("id"));
+				user.setName(rs.getString("name"));
+				user.setSex(rs.getInt("sex"));
+				user.setStu_code(rs.getString("stu_code"));
+				user.setDormBuildId(rs.getInt("dormBuildId"));
+				user.setTel(rs.getString("tel"));
+				
+				DormBuild build = new DormBuild();
+				build.setDormBuildName(rs.getInt("buildName"));
+				user.setBuild(build);
+				
+				users.add(user) ;
+			}
+			return users;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/**
+	 * 找到目标管理员
+	 */
+	@Override
+	public void saveManager(User manager) {
+		Connection connection = ConnectionFactory.getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		try {
+			String sql = "insert into user(name,password,stu_code,sex,dormBuildId,tel,roleId) value(?,?,?,?,?,?,1)";
+			preparedStatement = connection.prepareStatement(sql); 
+			
+			preparedStatement.setString(1, manager.getName());
+			preparedStatement.setString(2, manager.getPassword());
+			preparedStatement.setString(3, manager.getStu_code());
+			preparedStatement.setInt(4, manager.getSex());
+			preparedStatement.setInt(5, manager.getDormBuildId());
+			preparedStatement.setString(6, manager.getTel());
+			
+			preparedStatement.executeUpdate();
+			
+		
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+	/**
+	 * 更新宿舍管理员信息
+	 */
+	@Override
+	public void updateManager(User manager) {
+		Connection connection = ConnectionFactory.getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		try {
+			String sql = "Update user set name = ?,password = ?,stu_code = ?,sex = ?,dormBuildId = ?,tel = ? where id = ?";
+			System.out.println(sql);
+			preparedStatement = connection.prepareStatement(sql); 
+			
+			preparedStatement.setString(1, manager.getName());
+			preparedStatement.setString(2, manager.getPassword());
+			preparedStatement.setString(3, manager.getStu_code());
+			preparedStatement.setInt(4, manager.getSex());
+			preparedStatement.setInt(5, manager.getDormBuildId());
+			preparedStatement.setString(6, manager.getTel());
+
+			preparedStatement.setInt(7, manager.getId());
+			
+			preparedStatement.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	@Override

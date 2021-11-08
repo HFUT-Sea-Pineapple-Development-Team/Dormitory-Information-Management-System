@@ -53,7 +53,7 @@
                     <td>${notice.name }</td>
                     <td>${notice.title }</td>
                     <td><button class="btn btn-mini btn-info" type="button" onclick="javascript:window.location='stuNotice.action?action=detail&id=${notice.id}'">查看具体内容</button>&nbsp;
-                    <td><button class="btn btn-mini btn-info" type="button" onclick="javascript:window.location='stuNotice.action?action=check&id=${notice.id}'">确认收到</button>
+                    <td><button class="btn btn-mini btn-info" type="button" onclick="javascript:{this.disabled=true; }">确认收到</button>
                 </tr>
             </c:forEach>
             </tbody>
