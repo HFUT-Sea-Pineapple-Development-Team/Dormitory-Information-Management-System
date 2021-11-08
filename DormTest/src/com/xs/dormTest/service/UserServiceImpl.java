@@ -117,7 +117,6 @@ public class UserServiceImpl implements UserService {
 	}
 	@Override
 	public void updateStudent(User studentUpdate) {
-		// TODO Auto-generated method stub
 		userDao.updateStudent(studentUpdate);
 	}
 	@Override
@@ -126,8 +125,36 @@ public class UserServiceImpl implements UserService {
 	}
 	@Override
 	public UserAndRoom findByRoomId(Integer studentId) {
-		// TODO Auto-generated method stub
 		return userDao.findByRoomId(studentId);
+	}
+	@Override
+	public List<User> findByBuildAndRoom(Integer BuildId, Integer RoomId) {
+		return userDao.findByBuildAndRoom(BuildId, RoomId);
+	}
+	@Override
+	public List<User> findNotRoom(Integer build_id) {
+		return userDao.findNotRoom(build_id);
+	}
+	@Override
+	public void addUser(User userAdd) {
+		userDao.addUser(userAdd);	
+	}
+	@Override
+	public void updateRoom(Integer id) {
+		userDao.updateRoom(id);
+	}
+	@Override
+	public List<User> findManager() {
+		return userDao.findManager();
+	}
+	@Override
+	public void saveManager(User manager) {
+		userDao.saveManager(manager);
+	}
+	@Override
+	public void updateManager(User manager) {
+		userDao.updateManager(manager);
+		
 	}
 
 }

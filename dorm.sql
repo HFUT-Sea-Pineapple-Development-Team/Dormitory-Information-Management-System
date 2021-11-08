@@ -82,7 +82,7 @@ CREATE TABLE `hygiene_info` (
   `grade_20` float DEFAULT NULL COMMENT '20年寝室卫生打分',
   `grade_21` float DEFAULT NULL COMMENT '21年寝室卫生打分',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -91,8 +91,49 @@ CREATE TABLE `hygiene_info` (
 
 LOCK TABLES `hygiene_info` WRITE;
 /*!40000 ALTER TABLE `hygiene_info` DISABLE KEYS */;
+INSERT INTO `hygiene_info` VALUES (1,9,406,100,90,95,90),(2,9,407,80,85,90,95),(3,1,101,100,100,100,100),(5,9,408,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `hygiene_info` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `hygiene_info_after_update` AFTER UPDATE ON `hygiene_info` FOR EACH ROW BEGIN
+UPDATE room_info
+SET is_good = 0
+WHERE NEW.grade_18 + NEW.grade_19 + NEW.grade_20 + NEW.grade_21 >= 360
+AND room_info.room_id = NEW.room_id AND room_info.build_num = NEW.build_id;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `hygiene_info_after_update2` AFTER UPDATE ON `hygiene_info` FOR EACH ROW BEGIN
+UPDATE room_info
+SET is_good = 1
+WHERE NEW.grade_18 + NEW.grade_19 + NEW.grade_20 + NEW.grade_21 < 360
+AND room_info.room_id = NEW.room_id AND room_info.build_num = NEW.build_id;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `notice`
@@ -127,15 +168,20 @@ DROP TABLE IF EXISTS `repair_info`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `repair_info` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `stu_id` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '学工号，工作人员和学生统一',
-  `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '姓名',
-  `build_id` int DEFAULT NULL COMMENT '宿舍楼号',
-  `room_id` int DEFAULT NULL COMMENT '寝室房间号',
-  `report_time` datetime DEFAULT NULL COMMENT '报修时间',
-  `repair_time` datetime DEFAULT NULL COMMENT '维修时间',
-  `is_repair` tinyint(1) DEFAULT NULL COMMENT '是否维修成功；0：已维修成功；1：未维修成功',
+  `stu_id` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '学工号，工作人员和学生统一',
+  `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '姓名',
+  `build_id` int NOT NULL COMMENT '宿舍楼号',
+  `room_id` int NOT NULL COMMENT '寝室房间号',
+  `report_time` date NOT NULL COMMENT '报修时间',
+  `repair_time` date DEFAULT NULL COMMENT '维修时间',
+  `idea` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '维修意见',
+  `is_satisfied` varchar(5) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '维修是否满意：非常满意，满意，一般，不满意',
+  `reason` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '报修原因',
+  `tel` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '联系电话',
+  `is_finished` varchar(5) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '维修是否完成',
+  `repair_report` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '维修完成报告',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -144,6 +190,7 @@ CREATE TABLE `repair_info` (
 
 LOCK TABLES `repair_info` WRITE;
 /*!40000 ALTER TABLE `repair_info` DISABLE KEYS */;
+INSERT INTO `repair_info` VALUES (21,'2018217666','翁少勇',9,406,'2021-11-05','2021-11-05','速度很快','非常满意','大傻逼','18856357393','是','已完成，注意安全'),(24,'2018217632','蔡哲锐',9,403,'2021-11-05',NULL,NULL,NULL,'我不知道','18856357393',NULL,NULL),(25,'2018217632','姜天',9,403,'2021-11-05',NULL,NULL,NULL,'我也不知道','18856357393',NULL,NULL),(27,'2018217632','卢春雨',9,406,'2021-11-01','2021-11-03','从这些','一般','连不上校园网','18856357393','是','已经修好');
 /*!40000 ALTER TABLE `repair_info` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -163,7 +210,7 @@ CREATE TABLE `room_info` (
   `remain_elec_charge` float DEFAULT NULL COMMENT '剩余电费',
   `is_good` tinyint(1) NOT NULL COMMENT '是否优秀寝室 0:是,1:否',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -172,9 +219,30 @@ CREATE TABLE `room_info` (
 
 LOCK TABLES `room_info` WRITE;
 /*!40000 ALTER TABLE `room_info` DISABLE KEYS */;
-INSERT INTO `room_info` VALUES (1,101,1,2,30,50,0);
+INSERT INTO `room_info` VALUES (1,101,1,2,30,50,1),(2,406,9,1,30,60,0),(3,408,9,0,100,100,0);
 /*!40000 ALTER TABLE `room_info` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `room_info_before_insert` BEFORE INSERT ON `room_info` FOR EACH ROW BEGIN
+
+INSERT INTO hygiene_info(build_id,room_id)
+
+VALUES(NEW.build_num,NEW.room_id);
+
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `user`
@@ -200,7 +268,7 @@ CREATE TABLE `user` (
   UNIQUE KEY `stu_code` (`stu_code`),
   KEY `FK_user_dormbuild` (`dormBuildId`),
   CONSTRAINT `FK_user_dormbuild` FOREIGN KEY (`dormBuildId`) REFERENCES `dormbuild` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='用户表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -209,7 +277,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'admin','123',0,'110',0,NULL,NULL,NULL,'17777777777',NULL,0),(2,'keeper1','123',1,'10000',1,NULL,5,NULL,'17777777777',NULL,0),(3,'李白','123',2,'2018217666',1,NULL,1,101,'17777777777',NULL,0),(4,'诸葛亮','123',2,'2018217667',1,NULL,5,NULL,'17777777777',NULL,0),(5,'孙悟空','123',2,'2018217668',1,'计算机',1,101,'1777777777',1,0),(7,'孙膑','123',2,'2018217669',1,'计算机',4,101,'17777777777',1,0),(8,'刘备','123',2,'2018217670',1,'计算机',5,101,'17777777777',1,0),(9,'1','123',2,'2018217631',1,'计算机',1,123,'123',1,0),(10,'蔡哲锐','1',2,'2018217632',1,'计算机',4,123,'17756921990',2,1),(12,'1','1',2,'2018217600',1,'计算机',1,123,'132',1,0),(16,'嬴政','123',2,'2018216190',1,'数学',6,301,'13888888888',5,0),(17,'朱熹','123',2,'2018217680',1,'语文',5,201,'13333333333',2,0);
+INSERT INTO `user` VALUES (1,'admin','123',0,'110',0,NULL,NULL,NULL,'17777777777',NULL,0),(2,'keeper1','123',1,'10000',1,NULL,9,NULL,'17777777777',NULL,0),(4,'诸葛亮','123',2,'2018217667',1,NULL,5,NULL,'17777777777',NULL,0),(5,'孙悟空','123',2,'2018217668',1,'计算机',1,101,'1777777777',1,0),(7,'孙膑','123',2,'2018217669',1,'计算机',4,101,'17777777777',1,0),(8,'刘备','123',2,'2018217670',1,'计算机',5,101,'17777777777',1,0),(9,'1','123',2,'2018217631',1,'计算机',1,123,'123',1,0),(10,'蔡哲锐','1',2,'2018217632',1,'计算机',9,406,'17756921990',2,1),(12,'1','1',2,'2018217600',1,'计算机',1,123,'132',1,0),(16,'嬴政','123',2,'2018216190',1,'数学',6,301,'13888888888',5,0),(17,'朱熹','123',2,'2018217680',1,'语文',5,201,'13333333333',2,0),(18,'李白','123',2,'2018217666',1,'计算机',4,101,'17777777777',1,0);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -280,4 +348,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-05 13:55:43
+-- Dump completed on 2021-11-05 21:57:21

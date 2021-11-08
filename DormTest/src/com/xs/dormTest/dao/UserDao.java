@@ -24,4 +24,18 @@ public interface UserDao {
 	void deleteStudent(User userDelete);
 
 	UserAndRoom findByRoomId(Integer studentId);
+
+	List<User> findByBuildAndRoom(Integer buildId, Integer roomId);
+
+	List<User> findNotRoom(Integer build_id);
+
+	void addUser(User userAdd);
+
+	void updateRoom(Integer id);
+
+	List<User> findManager();
+
+	void saveManager(User manager);
+
+	void updateManager(User manager);
 }

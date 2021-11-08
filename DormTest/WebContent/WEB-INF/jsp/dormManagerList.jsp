@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <script type="text/javascript">
 	function dormManagerDelete(dormManagerId) {
 		if(confirm("您确定要删除这个宿管吗？")) {
-			window.location="dormManager?action=delete&dormManagerId="+dormManagerId;
+			window.location="dormManager.action?action=delete&dormManagerId="+dormManagerId;
 		}
 	}
 	
@@ -15,7 +16,7 @@
 		<div class="data_list_title">
 			宿舍管理员管理
 		</div>
-		<form name="myForm" class="form-search" method="post" action="dormManager?action=search">
+		<form name="myForm" class="form-search" method="post" action="dormManager.action?action=list">
 				<button class="btn btn-success" type="button" style="margin-right: 50px;" onclick="javascript:window.location='dormManager.action?action=preAdd'">添加</button>
 				<span class="data_search">
 					<select id="searchType" name="searchType" style="width: 80px;">
@@ -29,24 +30,22 @@
 		<div>
 			<table class="table table-hover table-striped table-bordered">
 				<tr>
-					<th>编号</th>
+					<th>工号</th>
 					<th>姓名</th>
 					<th>性别</th>
 					<th>电话</th>
 					<th>宿舍楼</th>
-					<th>用户名</th>
 					<th>操作</th>
 				</tr>
 				<c:forEach  varStatus="i" var="dormManager" items="${dormManagerList }">
 					<tr>
-						<td>${i.count+(page-1)*pageSize }</td>
+						<td>${dormManager.stu_code }</td>
 						<td>${dormManager.name }</td>
 						<td>${dormManager.sex }</td>
 						<td>${dormManager.tel }</td>
-						<td>${dormManager.dormBuildName==null?"无":dormManager.dormBuildName }</td>
-						<td>${dormManager.userName }</td>
-						<td><button class="btn btn-mini btn-info" type="button" onclick="javascript:window.location='dormManager?action=preSave&dormManagerId=${dormManager.dormManagerId }'">修改</button>&nbsp;
-							<button class="btn btn-mini btn-danger" type="button" onclick="dormManagerDelete(${dormManager.dormManagerId})">删除</button></td>
+						<td>${dormManager.dormBuildId==null?"无":dormManager.build.dormBuildName }</td>
+						<td><button class="btn btn-mini btn-info" type="button" onclick="javascript:window.location='dormManager.action?action=preUpdate&dormManagerId=${dormManager.id }&dormBuildId=${dormManager.dormBuildId }'">修改</button>&nbsp;
+							<button class="btn btn-mini btn-danger" type="button" onclick="dormManagerDelete(${dormManager.id})">删除</button></td>
 					</tr>
 				</c:forEach>
 			</table>
