@@ -81,8 +81,8 @@ window.onload = function(){
 							<td>${room.room_id}</td>
 							<td>${room.person_num}</td>
 							<td>${room.person_num eq 4? "已满":"未满"}</td>
-							<td><button class="btn btn-mini btn-info" type="button" onclick="javascript:window.location='room.action?action=detail&buildId=${buildToSelect }&roomId=${room.room_id }'">查看详情</button>&nbsp;
-								<button class="btn btn-mini btn-danger" type="button" onclick="javascript:window.location='room.action?action=deleteRoom&buildId=${buildToSelect }&roomId=${room.room_id }'">删除</button></td>
+							<td><button class="btn btn-mini btn-info" type="button" onclick="javascript:window.location='room.action?action=detail&buildId=${buildToSelect }&roomId=${room.id }'">查看详情</button>&nbsp;
+								<button class="btn btn-mini btn-danger" type="button" onclick="javascript:window.location='room.action?action=deleteRoom&buildId=${buildToSelect }&roomId=${room.id }'">删除</button></td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -127,7 +127,7 @@ window.onload = function(){
 							<td>${room.room_id}</td>
 							<td>${room.person_num}</td>
 							<td>${room.person_num eq 4? "已满":"未满"}</td>
-							<td><button class="btn btn-mini btn-info" type="button" onclick="javascript:window.location='room.action?action=detail&buildId=${session_user.dormBuildId }&roomId=${room.room_id }'">查看详情</button>&nbsp;
+							<td><button class="btn btn-mini btn-info" type="button" onclick="javascript:window.location='room.action?action=detail&buildId=${session_user.dormBuildId }&roomId=${room.id }'">查看详情</button>&nbsp;
 						</tr>
 					</c:forEach>
 				</tbody>

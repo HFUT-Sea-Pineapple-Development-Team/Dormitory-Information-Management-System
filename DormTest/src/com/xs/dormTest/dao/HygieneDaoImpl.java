@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.xs.dormTest.bean.DormBuild;
 import com.xs.dormTest.bean.Hygiene;
+import com.xs.dormTest.bean.Room;
 import com.xs.dormTest.util.ConnectionFactory;
 
 /**
@@ -39,6 +40,10 @@ public class HygieneDaoImpl implements HygieneDao {
 				hygiene.setGrade_20(rs.getFloat("grade_20")) ;
 				hygiene.setGrade_21(rs.getFloat("grade_21")) ;
 				
+				Room room = new Room();
+				room.setRoom_id(rs.getInt("roomid"));
+				hygiene.setRoom(room);
+				
 				hygienes.add(hygiene);
 			}
 			return hygienes;
@@ -57,7 +62,7 @@ public class HygieneDaoImpl implements HygieneDao {
 	public Hygiene findByRoomId(Integer buildId, Integer roomId) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
-			String sql = "select * from hygiene_info where build_id = ? and room_id = ?";
+			String sql = "select hygiene_info.*,room_info.room_id roomid from hygiene_info left join room_info on room_info.id = hygiene_info.room_id where build_id = ? and hygiene_info.room_id = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			
 			//索引从1开始
@@ -77,6 +82,10 @@ public class HygieneDaoImpl implements HygieneDao {
 				hygiene.setGrade_19(rs.getFloat("grade_19")) ;
 				hygiene.setGrade_20(rs.getFloat("grade_20")) ;
 				hygiene.setGrade_21(rs.getFloat("grade_21")) ;
+				
+				Room room = new Room();
+				room.setRoom_id(rs.getInt("roomid"));
+				hygiene.setRoom(room);
 				
 				return hygiene;
 			}

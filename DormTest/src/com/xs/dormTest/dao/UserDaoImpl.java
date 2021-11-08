@@ -11,6 +11,7 @@ import com.mysql.cj.protocol.Resultset;
 import com.mysql.cj.xdevapi.PreparableStatement;
 import com.mysql.cj.xdevapi.Statement;
 import com.xs.dormTest.bean.DormBuild;
+import com.xs.dormTest.bean.Room;
 import com.xs.dormTest.bean.User;
 import com.xs.dormTest.bean.UserAndRoom;
 import com.xs.dormTest.util.ConnectionFactory;
@@ -104,7 +105,7 @@ public class UserDaoImpl implements UserDao {
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		try {
-			String sql = "insert into user(name,password,stu_code,sex,major,dormBuildId,roomId,tel,class) value(?,?,?,?,?,?,?,?,?)";
+			String sql = "insert into user(name,password,stu_code,sex,major,dormBuildId,tel,class) value(?,?,?,?,?,?,?,?)";
 			preparedStatement = connection.prepareStatement(sql); 
 			
 			preparedStatement.setString(1, user.getName());
@@ -113,9 +114,8 @@ public class UserDaoImpl implements UserDao {
 			preparedStatement.setInt(4, user.getSex());
 			preparedStatement.setString(5, user.getMajor());
 			preparedStatement.setInt(6, user.getDormBuildId());
-			preparedStatement.setInt(7, user.getRoomId());
-			preparedStatement.setString(8, user.getTel());
-			preparedStatement.setInt(9, user.getClassName());
+			preparedStatement.setString(7, user.getTel());
+			preparedStatement.setInt(8, user.getClassName());
 			
 			preparedStatement.executeUpdate();
 			
@@ -161,6 +161,10 @@ public class UserDaoImpl implements UserDao {
 				build.setDormBuildName(rs.getInt("buildName"));
 				user.setBuild(build);
 				
+				Room room = new Room();
+				room.setRoom_id(rs.getInt("roomName"));
+				user.setRoom(room);
+				
 				users.add(user) ;
 			}
 			return users;
@@ -196,7 +200,7 @@ public class UserDaoImpl implements UserDao {
 	public User findById(int id) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
-			String sql = "select * from user where id = ?";
+			String sql = "select user.*,room_info.room_id roomName from user left join room_info on room_info.id = user.roomId where user.id = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			
 			//索引从1开始
@@ -221,6 +225,10 @@ public class UserDaoImpl implements UserDao {
 				user.setTel(rs.getString("tel"));
 				user.setLeaveSchool(rs.getInt("leaveSchool"));
 				
+				Room room = new Room();
+				room.setRoom_id(rs.getInt("roomName"));
+				user.setRoom(room);
+				
 				return user;
 			}
 			
@@ -240,7 +248,7 @@ public class UserDaoImpl implements UserDao {
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		try {
-			String sql = "Update user set name = ?,password = ?,stu_code = ?,sex = ?,major = ?,dormBuildId = ?,roomId = ?,tel = ?,class = ?,leaveSchool = ? where id = ?";
+			String sql = "Update user set name = ?,password = ?,stu_code = ?,sex = ?,major = ?,dormBuildId = ?,tel = ?,class = ?,leaveSchool = ? where id = ?";
 			System.out.println(sql);
 			preparedStatement = connection.prepareStatement(sql); 
 			
@@ -250,11 +258,10 @@ public class UserDaoImpl implements UserDao {
 			preparedStatement.setInt(4, studentUpdate.getSex());
 			preparedStatement.setString(5, studentUpdate.getMajor());
 			preparedStatement.setInt(6, studentUpdate.getDormBuildId());
-			preparedStatement.setInt(7, studentUpdate.getRoomId());
-			preparedStatement.setString(8, studentUpdate.getTel());
-			preparedStatement.setInt(9, studentUpdate.getClassName());
-			preparedStatement.setInt(10, studentUpdate.getLeaveSchool());
-			preparedStatement.setInt(11, studentUpdate.getId());
+			preparedStatement.setString(7, studentUpdate.getTel());
+			preparedStatement.setInt(8, studentUpdate.getClassName());
+			preparedStatement.setInt(9, studentUpdate.getLeaveSchool());
+			preparedStatement.setInt(10, studentUpdate.getId());
 			
 			preparedStatement.executeUpdate();
 			
@@ -335,6 +342,7 @@ public class UserDaoImpl implements UserDao {
 			String sql = "select * from user where dormBuildId = ? and roomId = ?";
 			preparedStatement = connection.prepareStatement(sql);
 			
+			System.out.println(sql);
 			//索引从1开始
 			preparedStatement.setInt(1, buildId);
 			preparedStatement.setInt(2, roomId);

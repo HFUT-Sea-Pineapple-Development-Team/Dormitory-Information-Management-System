@@ -5,7 +5,7 @@
     <property name="user">root</property>
     
     <!-- <property name="password">2000416a</property> -->
-    <property name="password">root</property>
+    <property name="password">2000416a</property>
     
     <property name="initialPoolSize">10</property>
     <property name="maxIdleTime">30</property>

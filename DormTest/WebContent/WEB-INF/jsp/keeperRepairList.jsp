@@ -43,7 +43,7 @@
             <c:forEach items="${repairs}" var="repair" varStatus="stat" >
                 <tr>
                     <td>${stat.index}</td>
-                    <td>${repair.room_id }</td>
+                    <td>${repair.room.room_id}</td>
                     <td>${repair.name }</td>
                     <td>${repair.tel }</td>
                     <td>${repair.report_time }</td>

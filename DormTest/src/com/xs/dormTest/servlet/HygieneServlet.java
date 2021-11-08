@@ -50,15 +50,12 @@ public class HygieneServlet extends HttpServlet {
 		
 		if (action != null && action.equals("list")) {			
 			//宿舍管理员的情况，可以对卫生状况进行打分
-			if (roleId == 1) {
-				//获取搜索框内的值
-				String keyword = request.getParameter("keyword");
-				//获取所管辖的宿舍楼内的所有宿舍情况
-				//根据宿管的宿舍楼号获取宿舍情况
-				List<Hygiene> hygienes = hygieneService.findRoomHygiene(buildId,keyword);
-				request.setAttribute("hygienes", hygienes);
-				
-			}
+			//获取搜索框内的值
+			String keyword = request.getParameter("keyword");
+			//获取所管辖的宿舍楼内的所有宿舍情况
+			//根据宿管的宿舍楼号获取宿舍情况
+			List<Hygiene> hygienes = hygieneService.findRoomHygiene(buildId,keyword);
+			request.setAttribute("hygienes", hygienes);
 			
 			request.setAttribute("mainRight", "/WEB-INF/jsp/hygieneList.jsp");
 			request.getRequestDispatcher("/WEB-INF/jsp/mainAdmin.jsp").forward(request, response);

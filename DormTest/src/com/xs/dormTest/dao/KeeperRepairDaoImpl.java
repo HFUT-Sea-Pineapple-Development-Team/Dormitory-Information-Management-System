@@ -1,6 +1,7 @@
 package com.xs.dormTest.dao;
 
 import com.xs.dormTest.bean.RepairInfo;
+import com.xs.dormTest.bean.Room;
 import com.xs.dormTest.util.ConnectionFactory;
 
 import java.sql.*;
@@ -11,8 +12,8 @@ public class KeeperRepairDaoImpl implements KeeperRepairDao{
     @Override
     public List<RepairInfo> findByBuildId(int dormBuildId) {
         Connection connection = ConnectionFactory.getConnection();
-        try {
-            String sql = "select * from repair_info where build_id = ?";
+        try { 
+            String sql = "select repair_info.*,room_info.room_id roomName from repair_info left join room_info on room_info.id = repair_info.room_id where build_id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
             //索引从1开始
@@ -32,6 +33,10 @@ public class KeeperRepairDaoImpl implements KeeperRepairDao{
                 repairInfo.setTel(rs.getString("tel"));
                 repairInfo.setIdea(rs.getString("idea"));
 
+                Room room = new Room();
+				room.setRoom_id(rs.getInt("roomName"));
+				repairInfo.setRoom(room);
+				
                 repairInfos.add(repairInfo) ;
             }
             return repairInfos ;
@@ -103,7 +108,7 @@ public class KeeperRepairDaoImpl implements KeeperRepairDao{
     public List<RepairInfo> findByRoomId(int room_id) {
         Connection connection = ConnectionFactory.getConnection();
         try {
-            String sql = "select * from repair_info where room_id = ?";
+            String sql = "select * from repair_info where id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
             //索引从1开始

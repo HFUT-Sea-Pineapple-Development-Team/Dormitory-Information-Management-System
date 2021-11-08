@@ -64,6 +64,7 @@ public class RoomDaoImpl implements RoomDao {
 				Room room = new Room() ;
 				//每一行的数据封装在一个实体Bean中，根据字段名获取字段值，注意该字段是什么类型
 				//就get什么类型
+				room.setId(rs.getInt("id"));
 				room.setRoom_id(rs.getInt("room_id"));
 				room.setBuild_num(rs.getInt("build_num")) ;
 				room.setPerson_num(rs.getInt("person_num"));
@@ -86,7 +87,7 @@ public class RoomDaoImpl implements RoomDao {
 	public Room findByBuildAndRoom(Integer buildId, Integer roomId) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
-			String sql = "select * from room_info where build_num = ? and room_id = ?";
+			String sql = "select * from room_info where build_num = ? and id = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			
 			//索引从1开始

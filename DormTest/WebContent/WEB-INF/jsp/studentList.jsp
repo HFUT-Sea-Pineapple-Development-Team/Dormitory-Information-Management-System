@@ -97,7 +97,7 @@ window.onload = function(){
 							<td>${student.sex eq 0 ? '女':'男'}</td>
 							<td>${student.tel}</td>
 							<td>${student.build.dormBuildName}号楼</td>
-							<td>${student.roomId}</td>
+							<td>${student.room.room_id}</td>
 							<td>${student.major}</td>
 							<td>${student.className}</td>
 							<td><button class="btn btn-mini btn-info" type="button" onclick="javascript:window.location='student.action?action=preUpdate&id=${student.id }'">修改</button>&nbsp;

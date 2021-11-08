@@ -33,8 +33,7 @@ public class UserServiceImpl implements UserService {
 		// 进行拼接
 		StringBuffer sql = new StringBuffer();
 		// 不管当前用户角色怎么样，查询的都是学生，所有role_id=2
-		sql.append("select user.*,dormbuild.dormBuildName buildName from user left join dormbuild on dormbuild.id = user.dormBuildId where roleId = 2 ");
-		
+		sql.append("select user.*,dormbuild.dormBuildName buildName,room_info.room_id roomName from user left join dormbuild on dormbuild.id = user.dormBuildId left join room_info on room_info.id = user.roomId where roleId = 2 ");
 		if (keyword != null && !keyword.equals("") && "name".equals(searchType)) {
 			//根据姓名查询
 			sql.append(" and user.name like '%"+keyword.trim()+"%'");
@@ -43,7 +42,7 @@ public class UserServiceImpl implements UserService {
 			sql.append(" and user.stu_code = '"+keyword.trim()+"'");
 		}else if (keyword  != null && !keyword.equals("") && "dorm".equals(searchType)) {
 			//根据寝室号查询
-			sql.append(" and user.roomId = '"+keyword.trim()+"'");
+			sql.append(" and room_info.room_id = '"+keyword.trim()+"'");
 		}else if (keyword  != null && !keyword.equals("") && "sex".equals(searchType)) {
 			//根据性别查询
 			if (keyword.equals("男"))
