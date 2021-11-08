@@ -124,6 +124,32 @@ window.onload = function(){
 </c:if>
 
 <c:if test="${session_user.roleId == 2}">
+<div class="data_list">
+	<div class="data_list_title">我的寝室情况 </div>
+	<div>
+		<table class="table table-hover table-striped table-bordered">
+				<tr>
+					<th>寝室楼</th>
+					<th>寝室房间号</th>
+					<th>卫生情况</th>
+					<th>剩余水费</th>
+					<th>剩余电费</th>
+					<th>操作</th>
+				</tr>
+				<tr>
+					<td>${studentDormBuild.dormBuildName}</td>
+					<td>${roomId}</td>
+					<td>${userAndRoom.is_good eq 0 ? '优秀':'良好'}</td>
+					<td>${userAndRoom.remain_water_charge }</td>
+					<td>${userAndRoom.remain_elec_charge }</td>
+					<td><button class="btn btn-mini btn-info" type="button" onclick="javascript:window.location='dormManager.action?action=preUpdate&dormManagerId=${dormManager.id }&dormBuildId=${dormManager.dormBuildId }'">缴纳水费</button>&nbsp;
+					<button class="btn btn-mini btn-danger" type="button" onclick="dormManagerDelete(${dormManager.id})">缴纳电费</button></td>
+				</tr>
+				
+				
+			</table>
+	</div>
+	</div>
 	<th>寝室楼:</th>
 	<td>${studentDormBuild.dormBuildName}</td>
 	<th>寝室房间号:</th>
