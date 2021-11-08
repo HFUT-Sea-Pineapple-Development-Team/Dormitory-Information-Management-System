@@ -7,6 +7,7 @@ public class User {
 	private Integer roleId;
 	private String stu_code;
 	private Integer sex;
+
 	private String major;
 	private Integer dormBuildId;
 	private Integer roomId;
@@ -14,6 +15,8 @@ public class User {
 	private Integer className;
 	private Integer leaveSchool;
 	private DormBuild build;
+
+
 	public User() {
 		super();
 	}
@@ -70,6 +73,7 @@ public class User {
 	public void setSex(Integer sex) {
 		this.sex = sex;
 	}
+
 	public String getMajor() {
 		return major;
 	}
@@ -119,15 +123,5 @@ public class User {
 				+ ", tel=" + tel + ", className=" + className + ", leaveSchool=" + leaveSchool + ", build=" + build
 				+ "]";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }

@@ -70,6 +70,7 @@ public class UserServiceImpl implements UserService {
 		List<User> students = userDao.findStudent(sql.toString());
 		return students;
 	}
+	
 	@Override
 	public Integer findTotalNum(String buildToSelect, String searchType, String keyword, User user) {
 		// 进行拼接

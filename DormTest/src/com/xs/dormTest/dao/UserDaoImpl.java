@@ -42,6 +42,7 @@ public class UserDaoImpl implements UserDao {
 				user.setSex(rs.getInt("sex"));
 				user.setStu_code(rs.getString("stu_code"));
 				user.setDormBuildId(rs.getInt("dormBuildId"));
+				user.setDormBuildId(rs.getInt("dormBuildId"));
 				user.setRoomId(rs.getInt("roomId"));
 				
 				return user;
@@ -236,7 +237,6 @@ public class UserDaoImpl implements UserDao {
 	 */
 	@Override
 	public void updateStudent(User studentUpdate) {
-		// TODO Auto-generated method stub
 		Connection connection = ConnectionFactory.getConnection();
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
