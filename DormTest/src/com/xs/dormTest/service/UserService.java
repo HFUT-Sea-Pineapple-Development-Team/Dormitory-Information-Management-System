@@ -1,5 +1,6 @@
 package com.xs.dormTest.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import com.xs.dormTest.bean.User;
@@ -26,4 +27,5 @@ public interface UserService {
 
 	UserAndRoom findByRoomId(Integer studentId);
 
+    void insertMuch(List<User> stus) throws SQLException;
 }

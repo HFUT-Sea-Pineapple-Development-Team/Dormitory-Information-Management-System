@@ -1,5 +1,6 @@
 package com.xs.dormTest.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import com.xs.dormTest.bean.DormBuild;
@@ -128,6 +129,11 @@ public class UserServiceImpl implements UserService {
 	public UserAndRoom findByRoomId(Integer studentId) {
 		// TODO Auto-generated method stub
 		return userDao.findByRoomId(studentId);
+	}
+
+	@Override
+	public void insertMuch(List<User> stus) throws SQLException {
+		userDao.insertMuch(stus) ;
 	}
 
 }

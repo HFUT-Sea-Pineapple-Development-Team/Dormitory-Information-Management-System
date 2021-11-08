@@ -1,5 +1,6 @@
 package com.xs.dormTest.dao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import com.xs.dormTest.bean.User;
@@ -24,4 +25,6 @@ public interface UserDao {
 	void deleteStudent(User userDelete);
 
 	UserAndRoom findByRoomId(Integer studentId);
+
+    void insertMuch(List<User> stus) throws SQLException;
 }

@@ -1,6 +1,8 @@
 package com.xs.dormTest.servlet;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,6 +119,11 @@ public class StudentServlet extends HttpServlet {
 			request.setAttribute("builds", builds);
 			
 			request.setAttribute("mainRight", "/WEB-INF/jsp/studentAddOrUpdate.jsp");
+			request.getRequestDispatcher("/WEB-INF/jsp/mainAdmin.jsp").forward(request, response);
+		}else if(action != null && action.equals("addList")) {
+			//批量导入学生信息
+
+			request.setAttribute("mainRight", "/WEB-INF/jsp/selectFile.jsp");
 			request.getRequestDispatcher("/WEB-INF/jsp/mainAdmin.jsp").forward(request, response);
 		}else if (action != null && action.equals("save")) {
 			//保存学生

@@ -1,9 +1,6 @@
 package com.xs.dormTest.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -322,6 +319,49 @@ public class UserDaoImpl implements UserDao {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	@Override
+	public void insertMuch(List<User> stus) throws SQLException {
+		Connection connection = ConnectionFactory.getConnection();
+		//调用存储过程
+		CallableStatement cs = null;
+		cs = connection.prepareCall("{call insertAll(?,?,?,?,?,?,?,?)}");
+		for (int i = 0; i < stus.size(); i++) {
+			String stu_code = stus.get(i).getStu_code();
+			String name = stus.get(i).getName();
+			int sex = stus.get(i).getSex() ;
+			String tel = stus.get(i).getTel();
+			int build_id = stus.get(i).getDormBuildId() ;
+			int room_id = stus.get(i).getRoomId();
+			String major = stus.get(i).getMajor();
+			int Class = stus.get(i).getClassName() ;
+
+			try {
+
+//				cs = connection.prepareCall("call insertAll"+"("+ stu_code + name + sex + tel
+//						+ build_id + room_id + major + Class +")");
+				cs.setObject(1 ,stu_code);
+				cs.setObject(2 ,name);
+				cs.setObject(3 ,sex);
+				cs.setObject(4 ,tel);
+				cs.setObject(5 ,build_id);
+				cs.setObject(6 ,room_id);
+				cs.setObject(7 ,major);
+				cs.setObject(8 ,Class);
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			try {
+				cs.execute() ;
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+
 	}
 
 }
